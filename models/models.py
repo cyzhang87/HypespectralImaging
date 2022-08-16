@@ -229,11 +229,11 @@ class MLayerBiLSTM(nn.Module):
     def forward(self, input):
         recurrent1, (hidden, cell) = self.rnn1(input) # input:128*272*1 recurrent1:128*272*256
         recurrent2, (hidden, cell) = self.rnn2(recurrent1)
-        #attention_output = self.attention(recurrent2, hidden) #recurrent2: 128*67*256, hidden: 2*128*128
+        attention_output = self.attention(recurrent2, hidden) #recurrent2: 128*67*256, hidden: 2*128*128
         #rnn1_output = recurrent1[:, -1, :]  # get the last sequence
         rnn2_output = recurrent2[:, -1, :]
-        #output = torch.cat([attention_output, rnn2_output], 1)
-        return rnn2_output
+        output = torch.cat([attention_output, rnn2_output], 1)
+        return output
 
 
 class MLayerBiLSTMModel(nn.Module):
